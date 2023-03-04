@@ -6,14 +6,14 @@ $(document).ready(function() {
 
 async function cargarUsuarios(){
 
-    const request = await fetch('usuario/123',{
+    const request = await fetch('usuario',{
         method: 'GET',
         header: {
             'Accept': 'application/json',
             'Content-Type': 'application/json'
         }
     });
-    const data = await request.json();
-    console.log(data);
+    const usuarios = await request.json();
+    console.log(usuarios);
 
 };

@@ -28,6 +28,10 @@ public class UsuarioController {
     public List<Usuario> getUsuarios() {
         return usuarioDao.getUsuarios();
     }
+    @PostMapping(value = "api/usuarios")
+    public void registerUsers(@RequestBody Usuario usuario) {
+        usuarioDao.registrar(usuario);
+    }
 
     @DeleteMapping(value = "api/usuario/{id}")
     public void delete(@PathVariable Long id) {

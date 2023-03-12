@@ -3,6 +3,7 @@ package com.cursospring.curso.controllers;
 import com.cursospring.curso.dao.UsuarioDao;
 import com.cursospring.curso.models.Usuario;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.argon2.Argon2PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
@@ -30,6 +31,9 @@ public class UsuarioController {
     }
     @PostMapping(value = "api/usuarios")
     public void registerUsers(@RequestBody Usuario usuario) {
+
+        //Argon2
+        Argon2PasswordEncoder argon2PasswordEncoder;
         usuarioDao.registrar(usuario);
     }
 

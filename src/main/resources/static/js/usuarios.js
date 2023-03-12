@@ -23,13 +23,14 @@ async function cargarUsuarios(){
         let button = `<a href="#" onclick="eliminarUsuario('${usuario.id}')" class="btn btn-danger btn-circle btn-lg">
                               <i class="fas fa-trash"></i>
                           </a>`;
+        let telefono = usuario.telefono ? usuario.telefono : '-';
+
         let usuariosHtml = `
         <tr>
             <td>`+usuario.id+`</td>
-            <td>`+usuario.nombre+`</td>
-            <td>`+usuario.apellido+`</td>
+            <td>`+usuario.nombre+` `+usuario.apellido+`</td>
             <td>`+usuario.email+`</td>
-            <td>`+usuario.telefono+`</td>
+            <td>`+telefono+`</td>
             <td>${button}</td>
         </tr>
         `;
@@ -40,12 +41,12 @@ async function cargarUsuarios(){
 
 };
 
-function eliminarUsuario(id){
+async function eliminarUsuario(id){
     if(!confirm('¿Desea eliminar al usuario?')){
         return;
     }
 
-    const request = await fetch('api/usuario/'${id},{
+    const request = await fetch('api/usuario/${id}',{
         method: 'DELETE',
         headers: {
             'Accept': 'application/json',

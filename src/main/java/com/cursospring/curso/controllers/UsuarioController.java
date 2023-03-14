@@ -6,8 +6,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.argon2.Argon2PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 
+import java.security.SecureRandom;
 import java.util.ArrayList;
+import java.util.Base64;
 import java.util.List;
+
 
 @RestController
 public class UsuarioController {
@@ -32,8 +35,15 @@ public class UsuarioController {
     @PostMapping(value = "api/usuarios")
     public void registerUsers(@RequestBody Usuario usuario) {
 
-        //Argon2
-        Argon2PasswordEncoder argon2PasswordEncoder;
+        // Generar una sal aleatoria
+        SecureRandom random = new SecureRandom();
+        byte[] saltBytes = new byte[16];
+        random.nextBytes(saltBytes);
+        String salt = Base64.getEncoder().encodeToString(saltBytes);
+
+        Argon2PasswordEncoder passwordEncoder = new Argon2PasswordEncoder(salt.length(),16, 65536, 1, 64);
+        String hashedPassword = passwordEncoder.encode(usuario.getPassword() + salt);
+        usuario.setPassword(hashedPassword);
         usuarioDao.registrar(usuario);
     }
 

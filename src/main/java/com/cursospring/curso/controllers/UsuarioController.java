@@ -33,7 +33,7 @@ public class UsuarioController {
     public void registerUsers(@RequestBody Usuario usuario) {
 
         //Argon2
-        Argon2PasswordEncoder argon2PasswordEncoder;
+        //Argon2PasswordEncoder argon2PasswordEncoder;
         usuarioDao.registrar(usuario);
     }
 

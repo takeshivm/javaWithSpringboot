@@ -13,7 +13,7 @@ public class AuthController {
     @Autowired
     private UsuarioDao usuarioDao;
     @PostMapping(value = "api/login")
-    public String registerUsers(@RequestBody Usuario usuario) {
+    public String verifyUsers(@RequestBody Usuario usuario) {
         if (usuarioDao.verifyCredentials(usuario)) {
             return "OK";
         }

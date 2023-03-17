@@ -38,4 +38,6 @@ async function registrarUsuario(){
       console.log("Error al leer la respuesta del servidor:", e);
       return;
     }
+    alert("La cuenta fue creada con exito");
+    window.location.href = 'login.html';
 };

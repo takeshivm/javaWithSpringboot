@@ -41,7 +41,8 @@ public class UsuarioController {
         SecureRandom random = new SecureRandom();
         byte[] saltBytes = new byte[16];
         random.nextBytes(saltBytes);
-        String salt = Base64.getEncoder().encodeToString(saltBytes);
+        //String salt = Base64.getEncoder().encodeToString(saltBytes);
+        String salt = "s0uewk114lijs";
 
         Argon2PasswordEncoder passwordEncoder = new Argon2PasswordEncoder(16, 64, 1, 65536, 8);
         String hashedPassword = passwordEncoder.encode(usuario.getPassword() + salt);

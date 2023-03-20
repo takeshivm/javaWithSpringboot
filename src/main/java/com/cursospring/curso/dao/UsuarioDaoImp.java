@@ -35,13 +35,13 @@ public class UsuarioDaoImp implements UsuarioDao{
     }
 
     @Override
-    public boolean verifyCredentials(Usuario usuario) {
+    public Usuario getUserByCredentials(Usuario usuario) {
         String query = "FROM Usuario WHERE email = :email";
         List<Usuario> list =  entityManager.createQuery(query)
                 .setParameter("email", usuario.getEmail())
                 .getResultList();
         if (!list.isEmpty()){
-            return false;
+            return null;
         }
 
         String salt = "s0uewk114lijs";
@@ -50,8 +50,12 @@ public class UsuarioDaoImp implements UsuarioDao{
         Argon2PasswordEncoder passwordEncoder = new Argon2PasswordEncoder(16, 64, 1, 65536, 8);
 
         // Verificar si la contraseña ingresada coincide con el hash almacenado
-        return passwordEncoder.matches(usuario.getPassword() + salt, passwordHashed);
+        //return passwordEncoder.matches(usuario.getPassword() + salt, passwordHashed);
 
+        if (passwordEncoder.matches(usuario.getPassword() + salt, passwordHashed)){
+            return list.get(0);
+        }
+        return null;
     }
 
 }

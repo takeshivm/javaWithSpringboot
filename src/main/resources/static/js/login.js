@@ -18,18 +18,24 @@ async function startSession(){
         },
         body: JSON.stringify(data)
     });
+
     //const usuarios = await request.json();
     let usuarios;
     const response = await request.text();
-    if (response.trim() === 'OK') {
+    console.log(response);
+    if (response.trim() !== 'False') {
+      localStorage.token = response;
+      localStorage.email = data.email;
       window.location.href = 'usuarios.html';
     } else {
       alert('Credenciales inválidas. Por favor, intenta de nuevo.');
     }
+    //min 4:04:06
     try {
       usuarios = JSON.parse(response);
     } catch (e) {
       console.log("Error al leer la respuesta del servidor:", e);
       return;
     }
+
 };

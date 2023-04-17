@@ -22,9 +22,10 @@ public class AuthController {
     public String verifyUsers(@RequestBody Usuario usuario) {
 
         Usuario userLog = usuarioDao.getUserByCredentials(usuario);
-
+        System.out.println(usuario);
         if (userLog != null) {
             String token = jwtUtil.create(String.valueOf(userLog.getId()), userLog.getEmail());
+            System.out.println(token);
             return token;
         }
         return "False";

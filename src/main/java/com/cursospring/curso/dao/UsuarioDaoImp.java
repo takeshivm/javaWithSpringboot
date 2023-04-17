@@ -37,12 +37,15 @@ public class UsuarioDaoImp implements UsuarioDao{
     @Override
     public Usuario getUserByCredentials(Usuario usuario) {
         String query = "FROM Usuario WHERE email = :email";
+        System.out.println(usuario.getEmail() + " - " + usuario.getPassword());
         List<Usuario> list =  entityManager.createQuery(query)
                 .setParameter("email", usuario.getEmail())
                 .getResultList();
-        if (!list.isEmpty()){
+        if (list.isEmpty()){
             return null;
         }
+        System.out.println(list.get(0).getEmail());
+        System.out.println(list.get(0).getPassword());
 
         String salt = "s0uewk114lijs";
         String passwordHashed = list.get(0).getPassword();
@@ -53,6 +56,7 @@ public class UsuarioDaoImp implements UsuarioDao{
         //return passwordEncoder.matches(usuario.getPassword() + salt, passwordHashed);
 
         if (passwordEncoder.matches(usuario.getPassword() + salt, passwordHashed)){
+            System.out.println("Retorno el usuario");
             return list.get(0);
         }
         return null;

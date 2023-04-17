@@ -23,7 +23,7 @@ async function startSession(){
     let usuarios;
     const response = await request.text();
     console.log(response);
-    if (response.trim() !== "False") {
+    if (response.trim() !== 'False') {
       localStorage.token = response;
       localStorage.email = data.email;
       window.location.href = 'usuarios.html';

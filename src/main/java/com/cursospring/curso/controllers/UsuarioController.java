@@ -2,6 +2,7 @@ package com.cursospring.curso.controllers;
 
 import com.cursospring.curso.dao.UsuarioDao;
 import com.cursospring.curso.models.Usuario;
+import com.cursospring.curso.utils.JWTUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 //import org.springframework.security.crypto.argon2.Argon2PasswordEncoder;
 import org.springframework.security.crypto.argon2.Argon2PasswordEncoder;
@@ -19,6 +20,10 @@ public class UsuarioController {
 
     @Autowired
     private UsuarioDao usuarioDao;
+
+    @Autowired
+    private JWTUtil jwtUtil;
+
     @RequestMapping(value = "api/usuario/{id}")
     public Usuario getUsuario(@PathVariable Long id) {
         Usuario usuario = new Usuario();
@@ -31,7 +36,13 @@ public class UsuarioController {
     }
 
     @RequestMapping(value = "api/usuarios")
-    public List<Usuario> getUsuarios() {
+    public List<Usuario> getUsuarios(@RequestHeader(value = "Authorization") String token) {
+
+        String idUsuario = jwtUtil.getKey(token);
+        if (idUsuario == null) {
+            return new ArrayList<>();
+        }
+
         return usuarioDao.getUsuarios();
     }
     @PostMapping(value = "api/usuarios")
